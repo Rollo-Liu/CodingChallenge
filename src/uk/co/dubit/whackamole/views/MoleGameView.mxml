@@ -24,6 +24,43 @@
 				<s:Fade alphaFrom="1" alphaTo="0" duration="100" />
 			</s:Sequence>
 		</s:Sequence>
+		<s:Sequence id="endAnimation" effectEnd="endAnimationEnd()">
+			<s:Sequence id="moleHolesFadeOutAnimation" target="{moleHolesDataGroup}">
+				<s:Parallel duration="300" startDelay="1000">
+					<s:Scale scaleXFrom="1" scaleYFrom="1" scaleXTo="0.5" scaleYTo="0" />
+					<s:Fade alphaFrom="1" alphaTo="0" duration="100" startDelay="200" />
+				</s:Parallel>
+			</s:Sequence>
+			<s:Sequence id="timeupAnimaiton" target="{timeupLabel}">
+				<s:Parallel duration="500" startDelay="200">
+					<s:Fade alphaFrom="0" alphaTo="1" />
+					<s:Scale scaleXFrom="0.5" scaleYFrom="0" scaleXTo="1" scaleYTo="1" />
+				</s:Parallel>
+				<s:Pause duration="1000" />
+				<s:Fade alphaFrom="1" alphaTo="0" duration="100" />
+			</s:Sequence>
+			<s:Sequence id="playerScoreFadeInAnimaiton" target="{scoreLabel}">
+				<s:Parallel duration="400">
+					<s:Fade alphaFrom="0" alphaTo="1" />
+					<s:Scale scaleXFrom="0" scaleYFrom="0" scaleXTo="1" scaleYTo="1" />
+				</s:Parallel>
+			</s:Sequence>
+		</s:Sequence>
+		<s:Sequence id="restartAnimation" effectEnd="restartAnimationEnd()">
+			<s:Sequence id="playerScoreFadeOutAnimaiton" target="{scoreLabel}">
+				<s:Parallel duration="400">
+					<s:Fade alphaFrom="1" alphaTo="0" />
+					<s:Scale scaleXFrom="1" scaleYFrom="1" scaleXTo="0.5" scaleYTo="0" />
+				</s:Parallel>
+			</s:Sequence>
+			<s:Sequence id="moleHolesFadeInAnimation" target="{moleHolesDataGroup}">
+				<s:Parallel duration="300" startDelay="500">
+					<s:Scale scaleXFrom="0.5" scaleYFrom="0" scaleXTo="1" scaleYTo="1" />
+					<s:Fade alphaFrom="0" alphaTo="1" duration="100" />
+				</s:Parallel>
+				<s:Pause duration="200" />
+			</s:Sequence>
+		</s:Sequence>
 	</fx:Declarations>
 	
 	<s:VGroup width="100%" height="100%" paddingBottom="10" paddingLeft="10" paddingRight="10" paddingTop="10" gap="10">
@@ -43,6 +80,20 @@
 						<s:GlowFilter color="0x000000" strength="10" />
 					</s:filters>		
 				</s:Label>
+				
+				<s:Label id="timeupLabel" text="Time's Up!" fontSize="60" color="0xffffff" verticalCenter="0" horizontalCenter="0" alpha="0">
+					<s:filters>
+						<s:GlowFilter color="0x000000" strength="10" />
+					</s:filters>		
+				</s:Label>
+				
+				<s:Label id="scoreLabel" text="Your Score: { finalScore }" fontSize="32" color="0xffffff" verticalCenter="0" horizontalCenter="0" alpha="0">
+					<s:filters>
+						<s:GlowFilter color="0x000000" strength="10" />
+					</s:filters>		
+				</s:Label>
+				
+				<s:Button id="playAgainButton" click="onPlayAgainButtonClick()" label="Play Again!" horizontalCenter="0" bottom="10" visible="false"/>
 				
 				<s:DataGroup
 					id="moleHolesDataGroup"

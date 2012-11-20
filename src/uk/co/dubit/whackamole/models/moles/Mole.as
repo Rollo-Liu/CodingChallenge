@@ -9,8 +9,15 @@ package uk.co.dubit.whackamole.models.moles
 	{
 		private var _points:int = 60;
 		private var _showtime:int = 1000;
- 		private var _dead:Boolean;
+ 		private var _dead:Boolean = false;
 
+		public function Mole(points:int = 60, showtime:int = 1000)
+		{
+			_points = points;
+			_showtime = showtime;
+			_dead = false;
+		}
+		
 		public function get points():int
 		{
 			return _points;

@@ -8,6 +8,7 @@ package uk.co.dubit.whackamole.models
 	
 	import uk.co.dubit.whackamole.models.events.MoleGameEvent;
 	import uk.co.dubit.whackamole.models.moles.Mole;
+	import uk.co.dubit.whackamole.views.events.IntroductionViewEvent;
 
 	/**
 	 * Contains all the logic for the game itself; controls
@@ -23,16 +24,21 @@ package uk.co.dubit.whackamole.models
 		private var _score:int = 0;
 		private var _moleHoles:ArrayCollection = new ArrayCollection();
 		
-		private var gameTimer:Timer;
+		private var gameTimer:Timer = null;
 		
-		private const GAME_TIMER_DELAY:int = 400;
-		private const TOTAL_MOLES:int = 60;
+		private var gameTimerDelayMax:int = 450;
+		private var gameTimerDelayMin:int = 350;
+		private var totalMoles:int = 10;
+		private var showTimeDelayMax:int = 1200;
+		private var showTimeDelayMin:int = 800;
+		private var hitBonus:int = 10;
 		
-		public function MoleGame()
+		public function MoleGame(difficulty:String = IntroductionViewEvent.DIFFICULTY_MEDIUM)
 		{
+			this.setDifficulty(difficulty);
 			//Set up the game timer; when it fires a new
 			//mole is added
-			gameTimer = new Timer(GAME_TIMER_DELAY, TOTAL_MOLES);
+			gameTimer = new Timer(this.getRandomIntFromRange(gameTimerDelayMin,gameTimerDelayMax), totalMoles);
 			gameTimer.addEventListener(TimerEvent.TIMER, onGameTimer);
 			gameTimer.addEventListener(TimerEvent.TIMER_COMPLETE, onGameTimerComplete);
 		}
@@ -58,6 +64,43 @@ package uk.co.dubit.whackamole.models
 		{
 			_moleHoles = value;
 		}
+		
+		public function setDifficulty(difficulty:String) : void
+		{
+			switch (difficulty)
+			{
+				case IntroductionViewEvent.DIFFICULTY_EASY:
+				{
+					gameTimerDelayMax = 550;
+					gameTimerDelayMin = 450;
+					totalMoles = 10;
+					showTimeDelayMax = 1500;
+					showTimeDelayMin = 1000;
+					hitBonus = 0;
+					break;
+				}
+				case IntroductionViewEvent.DIFFICULTY_MEDIUM:
+				{
+					gameTimerDelayMax = 450;
+					gameTimerDelayMin = 350;
+					totalMoles = 10;
+					hitBonus = 10;
+					showTimeDelayMax = 1200;
+					showTimeDelayMin = 800;
+					break;
+				}
+				case IntroductionViewEvent.DIFFICULTY_HARD:
+				{
+					gameTimerDelayMax = 350;
+					gameTimerDelayMin = 250;
+					totalMoles = 10;
+					hitBonus = 20;
+					showTimeDelayMax = 900;
+					showTimeDelayMin = 600;
+					break;
+				}
+			}
+		}
 
 		public function start() : void
 		{
@@ -79,6 +122,13 @@ package uk.co.dubit.whackamole.models
 		{
 			score += points;
 		}
+		
+		public function restart() : void
+		{
+			score = 0;
+			gameTimer.reset();
+			gameTimer.start();
+		}
 			
 		private function getFreeMoleHole() : MoleHole
 		{
@@ -94,11 +144,17 @@ package uk.co.dubit.whackamole.models
 			return moleHole;
 		}
 		
+		private function getRandomIntFromRange(min:int, max:int) : int
+		{
+			return Math.round(Math.random()*(max - min + 1) + min);
+		}
+		
 		private function onGameTimer(event:TimerEvent) : void
 		{
+			gameTimer.delay = this.getRandomIntFromRange(gameTimerDelayMin,gameTimerDelayMax);
 			//Every time the timer fires, add a new mole
 			var moleHole:MoleHole = getFreeMoleHole();
-			moleHole.populate(new Mole());
+			moleHole.populate(new Mole(hitBonus,this.getRandomIntFromRange(showTimeDelayMin,showTimeDelayMax)));
 		}
 		
 		private function onGameTimerComplete(event:TimerEvent) : void

@@ -5,10 +5,21 @@ package uk.co.dubit.whackamole.views.events
 	public class IntroductionViewEvent extends Event
 	{
 		public static const START:String = "introductionStart";
+		public static const DIFFICULTY_EASY:String = "difficultyEasy";
+		public static const DIFFICULTY_MEDIUM:String = "difficultyMedium";
+		public static const DIFFICULTY_HARD:String = "difficultyHard";
 		
-		public function IntroductionViewEvent(type:String, bubbles:Boolean=false, cancelable:Boolean=false)
+		private var _difficulty:String;
+		
+		public function IntroductionViewEvent(type:String, difficulty:String, bubbles:Boolean=false, cancelable:Boolean=false)
 		{
+			_difficulty = difficulty;
 			super(type, bubbles, cancelable);
+		}
+		
+		public function get difficulty():String
+		{
+			return _difficulty;
 		}
 	}
 }

@@ -17,6 +17,9 @@
 		<s:BorderContainer styleName="roundedBorder" minHeight="0" minWidth="0" width="100%" height="100%" >
 			<s:Label text="You know the drill - click the moles as soon as they appear, gain points. Hit as many as you can within the time limit. Good luck!"
 					 horizontalCenter="0" verticalCenter="0" width="60%" textAlign="center" />
+			<s:RadioButton id="radioButtonEasy" groupName="radioButtonDifficultySelection" label="Easy" selected="false" left="100" bottom="100" click="onRadioButtonEasyClick(event)" />
+			<s:RadioButton id="radioButtonMedium" groupName="radioButtonDifficultySelection" label="Medium" selected="true" horizontalCenter="0" bottom="100" click="onRadioButtonMediumClick(event)"/>
+			<s:RadioButton id="radioButtonHard" groupName="radioButtonDifficultySelection" label="Hard" selected="false" right="100" bottom="100" click="onRadioButtonHardClick(event)"/>
 			<s:Button id="startButton" click="onStartButtonClick()" label="Start!" horizontalCenter="0" bottom="10"/>
 		</s:BorderContainer>
 		

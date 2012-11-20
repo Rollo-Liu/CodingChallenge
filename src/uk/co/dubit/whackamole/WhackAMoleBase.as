@@ -33,16 +33,18 @@ package uk.co.dubit.whackamole
 		
 		protected function onIntroductionViewStart(event:IntroductionViewEvent):void
 		{
+			var difficulty:String = event.difficulty;
+			
 			event.target.removeEventListener(event.type, arguments.callee);
 			
-			loadMainGame();
+			loadMainGame(difficulty);
 		}
 		
-		public function loadMainGame() : void
+		public function loadMainGame(difficulty:String) : void
 		{
 			var moleGameView:MoleGameView = new MoleGameView();
-			moleGameView.moleGame = new MoleGame();
-
+			moleGameView.moleGame = new MoleGame(difficulty);
+			
 			loadView(moleGameView);
 		}
 		
