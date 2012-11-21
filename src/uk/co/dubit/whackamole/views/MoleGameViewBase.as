@@ -9,9 +9,9 @@ package uk.co.dubit.whackamole.views
 	import spark.components.Group;
 	import spark.components.Label;
 	
-	import uk.co.dubit.whackamole.models.MoleAcheivements;
+	import uk.co.dubit.whackamole.models.MoleAchievements;
 	import uk.co.dubit.whackamole.models.MoleGame;
-	import uk.co.dubit.whackamole.models.events.MoleAcheivementEvent;
+	import uk.co.dubit.whackamole.models.events.MoleAchievementEvent;
 	import uk.co.dubit.whackamole.models.events.MoleGameEvent;
 	
 	public class MoleGameViewBase extends Group
@@ -20,12 +20,12 @@ package uk.co.dubit.whackamole.views
 		public var endAnimation:Sequence;
 		public var restartAnimation:Sequence;
 		public var playAgainButton:Button;
-		public var acheivementApprenticeLabel:spark.components.Label;
-		public var acheivementMasterLabel:spark.components.Label;
-		public var acheivementMoleMassacreLabel:spark.components.Label;
-		public var acheivementFiremanLabel:spark.components.Label;
-		public var acheivementApocolypticaLabel:spark.components.Label;
-		public var acheivementSoftTouchLabel:spark.components.Label;
+		public var achievementApprenticeLabel:spark.components.Label;
+		public var achievementMasterLabel:spark.components.Label;
+		public var achievementMoleMassacreLabel:spark.components.Label;
+		public var achievementFiremanLabel:spark.components.Label;
+		public var achievementApocolypticaLabel:spark.components.Label;
+		public var achievementSoftTouchLabel:spark.components.Label;
 		
 		[Bindable]
 		protected var moleHoles:ArrayCollection;
@@ -37,7 +37,7 @@ package uk.co.dubit.whackamole.views
 		[Bindable]
 		protected var finalScore:int;
 		
-		protected var _acheivement:MoleAcheivements;
+		protected var _achievement:MoleAchievements;
 		
 		public function MoleGameViewBase() 
 		{
@@ -50,14 +50,14 @@ package uk.co.dubit.whackamole.views
 			moleHoles = value.moleHoles;
 		}
 		
-		public function set acheivement(value:MoleAcheivements) : void
+		public function set achievement(value:MoleAchievements) : void
 		{
-			_acheivement = value;
+			_achievement = value;
 		}
 		
-		public function get acheivement() : MoleAcheivements
+		public function get achievement() : MoleAchievements
 		{
-			return _acheivement;
+			return _achievement;
 		}
 		
 		protected function onCreationComplete(event:FlexEvent) : void
@@ -67,13 +67,13 @@ package uk.co.dubit.whackamole.views
 		
 		protected function startAnimationEnd() : void
 		{
-			// add acheivement event listener
-			_acheivement.addEventListener(MoleAcheivementEvent.ACHEIVEMENT_APPRENTICE, awardAheivement);
-			_acheivement.addEventListener(MoleAcheivementEvent.ACHEIVEMENT_MASTER, awardAheivement);
-			_acheivement.addEventListener(MoleAcheivementEvent.ACHEIVEMENT_MOLE_MASSACRE, awardAheivement);
-			_acheivement.addEventListener(MoleAcheivementEvent.ACHEIVEMENT_FIREMAN, awardAheivement);
-			_acheivement.addEventListener(MoleAcheivementEvent.ACHEIVEMENT_APOCOLYPTICA, awardAheivement);
-			_acheivement.addEventListener(MoleAcheivementEvent.ACHEIVEMENT_SOFT_TOUCH, awardAheivement);
+			// add achievement event listener
+			_achievement.addEventListener(MoleAchievementEvent.ACHIEVEMENT_APPRENTICE, awardAheivement);
+			_achievement.addEventListener(MoleAchievementEvent.ACHIEVEMENT_MASTER, awardAheivement);
+			_achievement.addEventListener(MoleAchievementEvent.ACHIEVEMENT_MOLE_MASSACRE, awardAheivement);
+			_achievement.addEventListener(MoleAchievementEvent.ACHIEVEMENT_FIREMAN, awardAheivement);
+			_achievement.addEventListener(MoleAchievementEvent.ACHIEVEMENT_APOCOLYPTICA, awardAheivement);
+			_achievement.addEventListener(MoleAchievementEvent.ACHIEVEMENT_SOFT_TOUCH, awardAheivement);
 			
 			// add gameover event listener
 			_moleGame.addEventListener(MoleGameEvent.GAME_OVER, onGameOver);
@@ -87,44 +87,44 @@ package uk.co.dubit.whackamole.views
 			endAnimation.play();
 		}
 		
-		protected function awardAheivement(event:MoleAcheivementEvent) :  void
+		protected function awardAheivement(event:MoleAchievementEvent) :  void
 		{
 			switch (event.type)
 			{
-				case MoleAcheivementEvent.ACHEIVEMENT_APPRENTICE:
+				case MoleAchievementEvent.ACHIEVEMENT_APPRENTICE:
 				{
-					acheivementApprenticeLabel.setStyle("fontWeight","bold");
+					achievementApprenticeLabel.setStyle("fontWeight","bold");
 					break;
 				}
-				case MoleAcheivementEvent.ACHEIVEMENT_MASTER:
+				case MoleAchievementEvent.ACHIEVEMENT_MASTER:
 				{
-					acheivementMasterLabel.setStyle("fontWeight","bold");
+					achievementMasterLabel.setStyle("fontWeight","bold");
 					break;
 				}
-				case MoleAcheivementEvent.ACHEIVEMENT_MOLE_MASSACRE:
+				case MoleAchievementEvent.ACHIEVEMENT_MOLE_MASSACRE:
 				{
-					acheivementMoleMassacreLabel.setStyle("fontWeight","bold");
+					achievementMoleMassacreLabel.setStyle("fontWeight","bold");
 					break;
 				}
-				case MoleAcheivementEvent.ACHEIVEMENT_FIREMAN:
+				case MoleAchievementEvent.ACHIEVEMENT_FIREMAN:
 				{
-					acheivementFiremanLabel.setStyle("fontWeight","bold");
+					achievementFiremanLabel.setStyle("fontWeight","bold");
 					break;
 				}
-				case MoleAcheivementEvent.ACHEIVEMENT_APOCOLYPTICA:
+				case MoleAchievementEvent.ACHIEVEMENT_APOCOLYPTICA:
 				{
-					acheivementApocolypticaLabel.setStyle("fontWeight","bold");
+					achievementApocolypticaLabel.setStyle("fontWeight","bold");
 					break;
 				}
-				case MoleAcheivementEvent.ACHEIVEMENT_SOFT_TOUCH:
+				case MoleAchievementEvent.ACHIEVEMENT_SOFT_TOUCH:
 				{
-					acheivementSoftTouchLabel.setStyle("fontWeight","bold");
+					achievementSoftTouchLabel.setStyle("fontWeight","bold");
 					break;
 				}
 				default:
 					break;
 			}
-			_acheivement.acheivementAwarded(event.type);
+			_achievement.achievementAwarded(event.type);
 			event.target.removeEventListener(event.type, arguments.callee);
 		}
 		
@@ -143,7 +143,7 @@ package uk.co.dubit.whackamole.views
 		{
 			_moleGame.addEventListener(MoleGameEvent.GAME_OVER, onGameOver);
 			_moleGame.restart();
-			_acheivement.reset();
+			_achievement.reset();
 		}
 	}
 }

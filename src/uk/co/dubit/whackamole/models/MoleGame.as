@@ -8,7 +8,7 @@ package uk.co.dubit.whackamole.models
 	
 	import mx.collections.ArrayCollection;
 	
-	import uk.co.dubit.whackamole.models.MoleAcheivements;
+	import uk.co.dubit.whackamole.models.MoleAchievements;
 	import uk.co.dubit.whackamole.models.events.MoleGameEvent;
 	import uk.co.dubit.whackamole.models.moles.FireMole;
 	import uk.co.dubit.whackamole.models.moles.Mole;
@@ -28,7 +28,7 @@ package uk.co.dubit.whackamole.models
 		
 		private var _score:int = 0;
 		private var _moleHoles:ArrayCollection = new ArrayCollection();
-		private var _gameAcheivements:MoleAcheivements = null;
+		private var _gameAchievements:MoleAchievements = null;
 
 		private var gameTimer:Timer = null;
 		private var timerComplete:Boolean = false;
@@ -40,9 +40,9 @@ package uk.co.dubit.whackamole.models
 		private var showTimeDelayMin:int = -200;
 		private var hitBonus:int = 10;
 		
-		public function MoleGame(acheivement:MoleAcheivements, difficulty:String = IntroductionViewEvent.DIFFICULTY_MEDIUM)
+		public function MoleGame(acheivement:MoleAchievements, difficulty:String = IntroductionViewEvent.DIFFICULTY_MEDIUM)
 		{
-			_gameAcheivements = acheivement;
+			_gameAchievements = acheivement;
 			this.setDifficulty(difficulty);
 			//Set up the game timer; when it fires a new
 			//mole is added
@@ -136,17 +136,17 @@ package uk.co.dubit.whackamole.models
 			{
 				case Mole.TYPE_NORMAL:
 				{
-					_gameAcheivements.addMoleHit();
+					_gameAchievements.addMoleHit();
 					break;
 				}
 				case Mole.TYPE_FIRE:
 				{
-					_gameAcheivements.addFireMoleHits();
+					_gameAchievements.addFireMoleHits();
 					break;
 				}
 				case Mole.TYPE_ZOMBIE:
 				{
-					_gameAcheivements.addZombieMoleHits();
+					_gameAchievements.addZombieMoleHits();
 					break;
 				}
 				default:
@@ -156,7 +156,7 @@ package uk.co.dubit.whackamole.models
 		
 		public function missedMole() : void
 		{
-			_gameAcheivements.addMissHits();
+			_gameAchievements.addMissHits();
 		}
 		
 		public function restart() : void

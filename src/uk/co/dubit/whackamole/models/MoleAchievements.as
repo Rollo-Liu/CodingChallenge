@@ -2,9 +2,9 @@ package uk.co.dubit.whackamole.models
 {
 	import flash.events.EventDispatcher;
 	
-	import uk.co.dubit.whackamole.models.events.MoleAcheivementEvent;
+	import uk.co.dubit.whackamole.models.events.MoleAchievementEvent;
 	
-	public class MoleAcheivements extends EventDispatcher
+	public class MoleAchievements extends EventDispatcher
 	{
 		private var moleHits:int = 0;
 		private var fireMoleHits:int = 0;
@@ -18,7 +18,7 @@ package uk.co.dubit.whackamole.models
 		private var isApocolypticaAwarded:Boolean = false;
 		private var isSoftTouchAwarded:Boolean = false;
 		
-		public function MoleAcheivements()
+		public function MoleAchievements()
 		{
 		}
 		
@@ -56,36 +56,36 @@ package uk.co.dubit.whackamole.models
 			this.update();
 		}
 		
-		public function acheivementAwarded(acheivement:String) : void
+		public function achievementAwarded(achievement:String) : void
 		{
-			switch (acheivement)
+			switch (achievement)
 			{
-				case MoleAcheivementEvent.ACHEIVEMENT_APPRENTICE:
+				case MoleAchievementEvent.ACHIEVEMENT_APPRENTICE:
 				{
 					isApprenticeAwarded = true;
 					break;
 				}
-				case MoleAcheivementEvent.ACHEIVEMENT_MASTER:
+				case MoleAchievementEvent.ACHIEVEMENT_MASTER:
 				{
 					isMasterAwarded = true;
 					break;
 				}
-				case MoleAcheivementEvent.ACHEIVEMENT_MOLE_MASSACRE:
+				case MoleAchievementEvent.ACHIEVEMENT_MOLE_MASSACRE:
 				{
 					isMoleMassacreAwarded = true;
 					break;
 				}
-				case MoleAcheivementEvent.ACHEIVEMENT_FIREMAN:
+				case MoleAchievementEvent.ACHIEVEMENT_FIREMAN:
 				{
 					isFiremanAwarded = true;
 					break;
 				}
-				case MoleAcheivementEvent.ACHEIVEMENT_APOCOLYPTICA:
+				case MoleAchievementEvent.ACHIEVEMENT_APOCOLYPTICA:
 				{
 					isApocolypticaAwarded = true;
 					break;
 				}
-				case MoleAcheivementEvent.ACHEIVEMENT_SOFT_TOUCH:
+				case MoleAchievementEvent.ACHIEVEMENT_SOFT_TOUCH:
 				{
 					isSoftTouchAwarded = true;
 					break;
@@ -98,22 +98,22 @@ package uk.co.dubit.whackamole.models
 		private function update() : void
 		{
 			if (moleHits >= 15 && !isApprenticeAwarded)
-				dispatchEvent(new MoleAcheivementEvent(MoleAcheivementEvent.ACHEIVEMENT_APPRENTICE));
+				dispatchEvent(new MoleAchievementEvent(MoleAchievementEvent.ACHIEVEMENT_APPRENTICE));
 			
 			if (moleHits >= 40 && !isMasterAwarded)
-				dispatchEvent(new MoleAcheivementEvent(MoleAcheivementEvent.ACHEIVEMENT_MASTER));
+				dispatchEvent(new MoleAchievementEvent(MoleAchievementEvent.ACHIEVEMENT_MASTER));
 			
 			if (moleHits >= 55 && !isMoleMassacreAwarded)
-				dispatchEvent(new MoleAcheivementEvent(MoleAcheivementEvent.ACHEIVEMENT_MOLE_MASSACRE));
+				dispatchEvent(new MoleAchievementEvent(MoleAchievementEvent.ACHIEVEMENT_MOLE_MASSACRE));
 			
 			if (fireMoleHits >= 10 && !isFiremanAwarded)
-				dispatchEvent(new MoleAcheivementEvent(MoleAcheivementEvent.ACHEIVEMENT_FIREMAN));
+				dispatchEvent(new MoleAchievementEvent(MoleAchievementEvent.ACHIEVEMENT_FIREMAN));
 			
 			if (zombieMoleHits >= 5 && !isApocolypticaAwarded)
-				dispatchEvent(new MoleAcheivementEvent(MoleAcheivementEvent.ACHEIVEMENT_APOCOLYPTICA));
+				dispatchEvent(new MoleAchievementEvent(MoleAchievementEvent.ACHIEVEMENT_APOCOLYPTICA));
 			
 			if (missHits >= 30 && !isSoftTouchAwarded)
-				dispatchEvent(new MoleAcheivementEvent(MoleAcheivementEvent.ACHEIVEMENT_SOFT_TOUCH));
+				dispatchEvent(new MoleAchievementEvent(MoleAchievementEvent.ACHIEVEMENT_SOFT_TOUCH));
 		}
 	}
 }

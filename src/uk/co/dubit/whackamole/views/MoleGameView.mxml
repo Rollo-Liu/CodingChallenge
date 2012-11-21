@@ -113,12 +113,12 @@
 				</s:BorderContainer>
 				
 				<s:BorderContainer styleName="roundedBorder" minHeight="0" minWidth="0" width="100%" height="100%" >
-					<s:Label id="acheivementApprenticeLabel" text="Apprentice" fontSize="18" left="20" top="20" />
-					<s:Label id="acheivementMasterLabel" text="Master" fontSize="18" left="20" top="60" />
-					<s:Label id="acheivementMoleMassacreLabel" text="Mole Massacre" fontSize="18" left="20" top="100" />
-					<s:Label id="acheivementFiremanLabel" text="Fireman" fontSize="18" left="20" top="140" />
-					<s:Label id="acheivementApocolypticaLabel" text="Apocolyptica" fontSize="18" left="20" top="180" />
-					<s:Label id="acheivementSoftTouchLabel" text="Soft Touch" fontSize="18" left="20" top="220" />
+					<s:Label id="achievementApprenticeLabel" text="Apprentice" fontSize="18" left="20" top="20" />
+					<s:Label id="achievementMasterLabel" text="Master" fontSize="18" left="20" top="60" />
+					<s:Label id="achievementMoleMassacreLabel" text="Mole Massacre" fontSize="18" left="20" top="100" />
+					<s:Label id="achievementFiremanLabel" text="Fireman" fontSize="18" left="20" top="140" />
+					<s:Label id="achievementApocolypticaLabel" text="Apocolyptica" fontSize="18" left="20" top="180" />
+					<s:Label id="achievementSoftTouchLabel" text="Soft Touch" fontSize="18" left="20" top="220" />
 				</s:BorderContainer>	
 			
 			</s:VGroup>
