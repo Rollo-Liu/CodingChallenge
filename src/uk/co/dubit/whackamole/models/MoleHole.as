@@ -73,14 +73,20 @@ package uk.co.dubit.whackamole.models
 				//Whack the mole, and if it results in a
 				//kill, rack up the score
 				mole.hit();
-				if(mole.dead) moleGame.addScore(mole.points);
+				if(mole.dead)
+					_moleGame.killedMole(mole);
 			}
 		}
 		
 		private function onShowTimerComplete(event:TimerEvent) : void
 		{
+			// report missing hits
+			if (!mole.dead)
+				_moleGame.missedMole();
 			//Empty the hole
 			mole = null;
+			// check the game is end or not
+			_moleGame.update();
 		}
 	}
 }

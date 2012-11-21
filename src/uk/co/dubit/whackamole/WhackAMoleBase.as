@@ -5,6 +5,7 @@ package uk.co.dubit.whackamole
 	import spark.components.Application;
 	import spark.components.Group;
 	
+	import uk.co.dubit.whackamole.models.MoleAcheivements;
 	import uk.co.dubit.whackamole.models.MoleGame;
 	import uk.co.dubit.whackamole.views.IntroductionView;
 	import uk.co.dubit.whackamole.views.MoleGameView;
@@ -42,8 +43,15 @@ package uk.co.dubit.whackamole
 		
 		public function loadMainGame(difficulty:String) : void
 		{
+			// create the game view
 			var moleGameView:MoleGameView = new MoleGameView();
-			moleGameView.moleGame = new MoleGame(difficulty);
+			
+			// create the acheivement system
+			moleGameView.acheivement = new MoleAcheivements();
+			
+			// create the game
+			moleGameView.moleGame = new MoleGame(moleGameView.acheivement, difficulty);
+			
 			
 			loadView(moleGameView);
 		}

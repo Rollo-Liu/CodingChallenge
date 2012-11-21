@@ -12,7 +12,9 @@
 			styleName="roundedBorder stretchToContainer"
 			minHeight="0" minWidth="0"
 			useHandCursor="{  moleHole.mole != null }" buttonMode="true" mouseChildren="false" >
-		<s:BitmapImage source="@Embed('/../assets/standard_mole.png')" visible="{ moleHole.mole != null }" horizontalCenter="0" verticalCenter="0" />
+		<s:BitmapImage source="@Embed('/../assets/standard_mole.png')" visible="{ moleHole.mole != null &amp;&amp; moleHole.mole.type == &quot;typeNormal&quot; }" horizontalCenter="0" verticalCenter="0" />
+		<s:BitmapImage source="@Embed('/../assets/fire_mole.png')" visible="{ moleHole.mole != null &amp;&amp; moleHole.mole.type == &quot;typeFire&quot; }" horizontalCenter="0" verticalCenter="0" />
+		<s:BitmapImage source="@Embed('/../assets/zombie_mole.png')" visible="{ moleHole.mole != null &amp;&amp; moleHole.mole.type == &quot;typeZombie&quot; }" horizontalCenter="0" verticalCenter="0" />
 		<s:BitmapImage source="@Embed('/../assets/skull_and_crossbones.png')" visible="{ moleHole.mole &amp;&amp; moleHole.mole.dead }" horizontalCenter="0" verticalCenter="0" />
 	</s:BorderContainer>
 </views:MoleHoleItemRendererBase>

@@ -4,10 +4,15 @@ package uk.co.dubit.whackamole.models
 	import flash.events.TimerEvent;
 	import flash.utils.Timer;
 	
+	import flashx.textLayout.formats.Float;
+	
 	import mx.collections.ArrayCollection;
 	
+	import uk.co.dubit.whackamole.models.MoleAcheivements;
 	import uk.co.dubit.whackamole.models.events.MoleGameEvent;
+	import uk.co.dubit.whackamole.models.moles.FireMole;
 	import uk.co.dubit.whackamole.models.moles.Mole;
+	import uk.co.dubit.whackamole.models.moles.ZombieMole;
 	import uk.co.dubit.whackamole.views.events.IntroductionViewEvent;
 
 	/**
@@ -23,18 +28,21 @@ package uk.co.dubit.whackamole.models
 		
 		private var _score:int = 0;
 		private var _moleHoles:ArrayCollection = new ArrayCollection();
-		
+		private var _gameAcheivements:MoleAcheivements = null;
+
 		private var gameTimer:Timer = null;
+		private var timerComplete:Boolean = false;
 		
 		private var gameTimerDelayMax:int = 450;
 		private var gameTimerDelayMin:int = 350;
 		private var totalMoles:int = 10;
-		private var showTimeDelayMax:int = 1200;
-		private var showTimeDelayMin:int = 800;
+		private var showTimeDelayMax:int = 200;
+		private var showTimeDelayMin:int = -200;
 		private var hitBonus:int = 10;
 		
-		public function MoleGame(difficulty:String = IntroductionViewEvent.DIFFICULTY_MEDIUM)
+		public function MoleGame(acheivement:MoleAcheivements, difficulty:String = IntroductionViewEvent.DIFFICULTY_MEDIUM)
 		{
+			_gameAcheivements = acheivement;
 			this.setDifficulty(difficulty);
 			//Set up the game timer; when it fires a new
 			//mole is added
@@ -73,9 +81,9 @@ package uk.co.dubit.whackamole.models
 				{
 					gameTimerDelayMax = 550;
 					gameTimerDelayMin = 450;
-					totalMoles = 10;
-					showTimeDelayMax = 1500;
-					showTimeDelayMin = 1000;
+					totalMoles = 50;
+					showTimeDelayMax = 500;
+					showTimeDelayMin = 0;
 					hitBonus = 0;
 					break;
 				}
@@ -83,22 +91,24 @@ package uk.co.dubit.whackamole.models
 				{
 					gameTimerDelayMax = 450;
 					gameTimerDelayMin = 350;
-					totalMoles = 10;
+					totalMoles = 60;
+					showTimeDelayMax = 200;
+					showTimeDelayMin = -200;
 					hitBonus = 10;
-					showTimeDelayMax = 1200;
-					showTimeDelayMin = 800;
 					break;
 				}
 				case IntroductionViewEvent.DIFFICULTY_HARD:
 				{
 					gameTimerDelayMax = 350;
 					gameTimerDelayMin = 250;
-					totalMoles = 10;
+					totalMoles = 70;
+					showTimeDelayMax = -100;
+					showTimeDelayMin = -400;
 					hitBonus = 20;
-					showTimeDelayMax = 900;
-					showTimeDelayMin = 600;
 					break;
 				}
+				default:
+					break;
 			}
 		}
 
@@ -118,16 +128,60 @@ package uk.co.dubit.whackamole.models
 			gameTimer.start();
 		}
 		
-		public function addScore(points:int) : void
+		public function killedMole(mole:Mole) : void
 		{
-			score += points;
+			score += mole.points;
+			
+			switch (mole.type)
+			{
+				case Mole.TYPE_NORMAL:
+				{
+					_gameAcheivements.addMoleHit();
+					break;
+				}
+				case Mole.TYPE_FIRE:
+				{
+					_gameAcheivements.addFireMoleHits();
+					break;
+				}
+				case Mole.TYPE_ZOMBIE:
+				{
+					_gameAcheivements.addZombieMoleHits();
+					break;
+				}
+				default:
+					break;
+			}
+		}
+		
+		public function missedMole() : void
+		{
+			_gameAcheivements.addMissHits();
 		}
 		
 		public function restart() : void
 		{
 			score = 0;
+			timerComplete = false;
 			gameTimer.reset();
 			gameTimer.start();
+		}
+		
+		public function update() : void
+		{
+			// check the game is end or not
+			if (timerComplete)
+			{
+				// timer complete + no more moles in holes = game over
+				for (var i:int = 0; i < moleHoles.length; ++i)
+				{
+					var moleHole:MoleHole = moleHoles[i];
+					if (moleHole.mole != null)
+						return;
+				}
+				// send the event message of game over
+				dispatchEvent(new MoleGameEvent(MoleGameEvent.GAME_OVER, score));
+			}
 		}
 			
 		private function getFreeMoleHole() : MoleHole
@@ -151,15 +205,31 @@ package uk.co.dubit.whackamole.models
 		
 		private function onGameTimer(event:TimerEvent) : void
 		{
-			gameTimer.delay = this.getRandomIntFromRange(gameTimerDelayMin,gameTimerDelayMax);
+			// random a delay value and set it as the timer's delay
+			// make the timer every time firing in a different (hope so) time
+			var randomDelay:int = this.getRandomIntFromRange(gameTimerDelayMin,gameTimerDelayMax);
+			// random a show time instead of a fixed show time for moles
+			var randomShowTime:int = this.getRandomIntFromRange(showTimeDelayMin,showTimeDelayMax);
+			// random a number to decide what type of moles need to be created
+			var randomMole:Number = Math.random();
+			var mole:Mole = null;
+			
+			if (randomMole < 0.6)
+				mole = new Mole(hitBonus,randomShowTime);
+			else if (randomMole > 0.85)
+				mole = new ZombieMole(hitBonus,randomShowTime);
+			else
+				mole = new FireMole(hitBonus,randomShowTime);
+			
+			gameTimer.delay = randomDelay;
 			//Every time the timer fires, add a new mole
 			var moleHole:MoleHole = getFreeMoleHole();
-			moleHole.populate(new Mole(hitBonus,this.getRandomIntFromRange(showTimeDelayMin,showTimeDelayMax)));
+			moleHole.populate(mole);
 		}
 		
 		private function onGameTimerComplete(event:TimerEvent) : void
 		{
-			dispatchEvent(new MoleGameEvent(MoleGameEvent.GAME_OVER, score));
+			timerComplete = true;
 		}
 	}
 }

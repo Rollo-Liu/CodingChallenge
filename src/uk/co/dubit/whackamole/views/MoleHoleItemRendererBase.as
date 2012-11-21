@@ -3,7 +3,7 @@ package uk.co.dubit.whackamole.views
 	import spark.components.supportClasses.ItemRenderer;
 	
 	import uk.co.dubit.whackamole.models.MoleHole;
-	
+	import uk.co.dubit.whackamole.models.moles.Mole;
 	/**
 	 * This item renderer is effectively the view for the MoleHole model
 	 * 

@@ -7,15 +7,20 @@ package uk.co.dubit.whackamole.models.moles
 	 **/
 	public class Mole
 	{
-		private var _points:int = 60;
-		private var _showtime:int = 1000;
- 		private var _dead:Boolean = false;
+		public static const TYPE_NORMAL:String = "typeNormal";
+		public static const TYPE_FIRE:String = "typeFire";
+		public static const TYPE_ZOMBIE:String = "typeZombie";
+		
+		protected var _points:int = 50;
+		protected var _showtime:int = 1000;
+		protected var _dead:Boolean = false;
+		protected var _hitPoints:int = 1;
+		protected var _type:String = TYPE_NORMAL;
 
-		public function Mole(points:int = 60, showtime:int = 1000)
+		public function Mole(bonus:int = 10, delay:int = 0)
 		{
-			_points = points;
-			_showtime = showtime;
-			_dead = false;
+			_points += bonus;
+			_showtime += delay;
 		}
 		
 		public function get points():int
@@ -48,10 +53,22 @@ package uk.co.dubit.whackamole.models.moles
 		{
 			_dead = value;
 		}
-
+		
+		[Bindable]
+		public function get type():String
+		{
+			return _type;
+		}
+		
+		public function set type(value:String):void
+		{
+			_type = value;
+		}
+		
 		public function hit() : void
 		{
-			dead = true;
+			if (--_hitPoints <= 0)
+				dead = true;
 		}
 	}
 }
