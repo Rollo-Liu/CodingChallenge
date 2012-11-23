@@ -6,15 +6,34 @@
 				click="onClick()"
 				width="80" height="80">
 	<fx:Declarations>
-		<!-- Place non-visual elements (e.g., services, value objects) here -->
+		<s:Parallel id="moleHitAnimation" target="{moleHit}" duration="100"
+					effectStart="moleHit.visible = true;"
+					effectEnd="moleHit.visible = false;">
+			<s:Scale scaleXFrom="0.5" scaleYFrom="0.5" scaleXTo="1" scaleYTo="1" />
+			<s:Fade alphaFrom="0" alphaTo="1" />
+		</s:Parallel>
+		<s:Parallel id="moleDeathAnimation" duration="150"
+					effectStart="moleSkull.visible = true;">
+			<s:Rotate angleFrom="0" angleTo="180" autoCenterTransform="true" />
+			<s:Move yFrom="0" yTo="15" autoCenterTransform="true" />
+			<s:Move target="{moleSkull}" yFrom="0" yTo="-15" autoCenterTransform="true" />
+			<s:Fade target="{moleSkull}" alphaFrom="0.5" alphaTo="1" />
+		</s:Parallel>
 	</fx:Declarations>
 	<s:BorderContainer
 			styleName="roundedBorder stretchToContainer"
 			minHeight="0" minWidth="0"
 			useHandCursor="{  moleHole.mole != null }" buttonMode="true" mouseChildren="false" >
-		<s:BitmapImage source="@Embed('/../assets/standard_mole.png')" visible="{ moleHole.mole != null &amp;&amp; moleHole.mole.type == &quot;typeNormal&quot; }" horizontalCenter="0" verticalCenter="0" />
-		<s:BitmapImage source="@Embed('/../assets/fire_mole.png')" visible="{ moleHole.mole != null &amp;&amp; moleHole.mole.type == &quot;typeFire&quot; }" horizontalCenter="0" verticalCenter="0" />
-		<s:BitmapImage source="@Embed('/../assets/zombie_mole.png')" visible="{ moleHole.mole != null &amp;&amp; moleHole.mole.type == &quot;typeZombie&quot; }" horizontalCenter="0" verticalCenter="0" />
-		<s:BitmapImage source="@Embed('/../assets/skull_and_crossbones.png')" visible="{ moleHole.mole &amp;&amp; moleHole.mole.dead }" horizontalCenter="0" verticalCenter="0" />
+		<s:BitmapImage id="moleNormalIdle" source="@Embed('/../assets/mole_normal_idle.png')" visible="false" horizontalCenter="0" verticalCenter="0" />
+		<s:BitmapImage id="moleNormalDie" source="@Embed('/../assets/mole_normal_die.png')" visible="false" horizontalCenter="0" />
+		<s:BitmapImage id="moleFireIdle" source="@Embed('/../assets/mole_fire_idle.png')" visible="false" horizontalCenter="0" verticalCenter="0" />
+		<s:BitmapImage id="moleFireHurt" source="@Embed('/../assets/mole_fire_hurt.png')" visible="false" horizontalCenter="0" verticalCenter="0" />
+		<s:BitmapImage id="moleFireDie" source="@Embed('/../assets/mole_fire_die.png')" visible="false" horizontalCenter="0" />
+		<s:BitmapImage id="moleZombieIdle" source="@Embed('/../assets/mole_zombie_idle.png')" visible="false" horizontalCenter="0" verticalCenter="0" />
+		<s:BitmapImage id="moleZombieHurt1" source="@Embed('/../assets/mole_zombie_hurt_1.png')" visible="false" horizontalCenter="0" verticalCenter="0" />
+		<s:BitmapImage id="moleZombieHurt2" source="@Embed('/../assets/mole_zombie_hurt_2.png')" visible="false" horizontalCenter="0" verticalCenter="0" />
+		<s:BitmapImage id="moleZombieDie" source="@Embed('/../assets/mole_zombie_die.png')" visible="false" horizontalCenter="0" />
+		<s:BitmapImage id="moleHit" source="@Embed('/../assets/mole_hit.png')" visible="false" horizontalCenter="0" verticalCenter="0" />
+		<s:BitmapImage id="moleSkull" source="@Embed('/../assets/mole_skull.png')" visible="false" scaleX="0.7" scaleY="0.7"/>
 	</s:BorderContainer>
 </views:MoleHoleItemRendererBase>

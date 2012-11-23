@@ -6,6 +6,14 @@
 		 xmlns:components="uk.co.dubit.whackamole.views.components.*"
 		 styleName="stretchToContainer">
 	<fx:Declarations>
+		<s:Parallel id="sceneEntryAnimation" effectEnd="startAnimation.play();" startDelay="200" >
+			<s:Fade target="{b1}" duration="500" alphaFrom="0" alphaTo="1" />
+			<s:Fade target="{b2}" duration="500" alphaFrom="0" alphaTo="1" startDelay="100" />
+			<s:Fade target="{b3}" duration="500" alphaFrom="0" alphaTo="1" startDelay="200" />
+			<s:Fade target="{b4}" duration="500" alphaFrom="0" alphaTo="1" startDelay="300" />
+		</s:Parallel>
+		<s:Fade id="sceneExitAnimation" target="{everything}" duration="500" alphaFrom="1" alphaTo="0"
+				effectEnd="onExitAnimationEnd();" />
 		<s:Sequence id="startAnimation" effectEnd="startAnimationEnd()">
 			<s:Sequence id="readyAnimation" target="{readyLabel}" >
 				<s:Parallel duration="400">
@@ -70,13 +78,14 @@
 		</s:Sequence>
 	</fx:Declarations>
 	
-	<s:VGroup width="100%" height="100%" paddingBottom="10" paddingLeft="10" paddingRight="10" paddingTop="10" gap="10">
+	<s:VGroup id="everything" width="100%" height="100%" paddingBottom="10" paddingLeft="10" paddingRight="10" paddingTop="10" gap="10">
 		
 		<s:HGroup width="100%" height="100%" gap="10">
 			
 			<s:VGroup width="66%" height="100%" gap="10">
 				
-				<s:BorderContainer styleName="roundedBorder" minHeight="0" minWidth="0" width="100%" height="100%" >
+				<s:BorderContainer id="b1" alpha="0" width="100%" height="100%" minWidth="0" minHeight="0"
+								   dropShadowVisible="true" styleName="roundedBorder">
 					
 					<s:Label id="readyLabel" text="Ready?" fontSize="72" color="0xffffff" verticalCenter="0" horizontalCenter="0" alpha="0">
 						<s:filters>
@@ -119,7 +128,8 @@
 					
 				</s:BorderContainer>
 				
-				<s:BorderContainer styleName="roundedBorder" minHeight="0" minWidth="0" width="100%" height="40" bottom="10" >
+				<s:BorderContainer id="b2" alpha="0" bottom="10" width="100%" height="40" minWidth="0" minHeight="0"
+								   dropShadowVisible="true" styleName="roundedBorder">
 					<s:Label text="Score: { _moleGame.score }" fontSize="16" fontWeight="bold" left="20" verticalCenter="0"/>
 				</s:BorderContainer>
 				
@@ -127,11 +137,13 @@
 			
 			<s:VGroup width="33%" height="100%" gap="10">
 				
-				<s:BorderContainer styleName="roundedBorder" minHeight="0" minWidth="0" width="100%" height="40" >
+				<s:BorderContainer id="b3" alpha="0" width="100%" height="40" minWidth="0" minHeight="0"
+								   dropShadowVisible="true" styleName="roundedBorder">
 					<s:Label text="Achievements" fontFamily="Verdana" fontSize="18" fontWeight="bold" verticalCenter="0" horizontalCenter="0" />
 				</s:BorderContainer>
 				
-				<s:BorderContainer styleName="roundedBorder" minHeight="0" minWidth="0" width="100%" height="100%" >
+				<s:BorderContainer id="b4" alpha="0" width="100%" height="100%" minWidth="0" minHeight="0"
+								   dropShadowVisible="true" styleName="roundedBorder">
 					<s:Label id="achievementApprenticeLabel" text="Apprentice" fontSize="18" left="20" top="20" color="0xA5D4DB"
 							 toolTip="Kill over 15 moles during a single game" />
 					<s:Label id="achievementMasterLabel" text="Master" fontSize="18" left="20" top="60" color="0xA5D4DB"

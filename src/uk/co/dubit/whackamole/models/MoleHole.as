@@ -66,16 +66,19 @@ package uk.co.dubit.whackamole.models
 			showTimer.start();
 		}
 		
-		public function hit() : void
+		public function hit() : Boolean
 		{
 			if(mole && !mole.dead)
 			{
 				//Whack the mole, and if it results in a
 				//kill, rack up the score
 				mole.hit();
+				_moleGame.hitMole();
 				if(mole.dead)
 					_moleGame.killedMole(mole);
+				return true;
 			}
+			return false;
 		}
 		
 		private function onShowTimerComplete(event:TimerEvent) : void

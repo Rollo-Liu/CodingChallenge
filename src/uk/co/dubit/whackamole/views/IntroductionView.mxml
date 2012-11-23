@@ -5,7 +5,7 @@
 		 xmlns:views="uk.co.dubit.whackamole.views.*"
 		 styleName="stretchToContainer">
 	<fx:Declarations>
-		<s:Sequence id="titleAnimation" startDelay="200" >
+		<s:Sequence id="titleEntryAnimation" startDelay="200" >
 			<s:Fade target="{group}" alphaFrom="0" alphaTo="1" duration="500" />
 			<s:Parallel duration="300" target="{titleLabel}"
 						effectEnd="titleShadowAnimation.play();titleGlowAnimation.play();" >
@@ -31,6 +31,10 @@
 				<s:Fade alphaFrom="0" alphaTo="1" />
 			</s:Parallel>
 		</s:Sequence>
+		<s:Parallel id="titleExitAnimation" effectEnd="onExitAnimationEnd();" >
+			<s:Scale target="{moleImage}" duration="600" scaleXFrom="1" scaleYFrom="1" scaleXTo="1.5" scaleYTo="1.5" autoCenterTransform="true" />
+			<s:Fade target="{group}" alphaFrom="1" alphaTo="0" duration="300" startDelay="300" />
+		</s:Parallel>	
 		<s:DropShadowFilter id="titleDropShadowFilter"
 							color="0x000000"
 							alpha="0.5"
@@ -78,11 +82,14 @@
 					 alpha="0" horizontalCenter="0" top="80" width="70%" textAlign="center" />
 			<s:Label id="labelDifficulty" text="Difficulty:" fontSize="18" alpha="0" bottom="190" />
 			<s:RadioButton id="radioButtonEasy" groupName="radioButtonDifficultySelection"
-						   label="Easy" selected="false" alpha="0" bottom="160" click="onRadioButtonEasyClick(event)" fontSize="18" />
+						   label="Easy" selected="false" alpha="0" bottom="160" click="onRadioButtonEasyClick(event)" fontSize="18" 
+						   toolTip="Showing Speed: Slow&#xa;Retreat Speed: Slow&#xa;Total Moles: Small" />
 			<s:RadioButton id="radioButtonMedium" groupName="radioButtonDifficultySelection" 
-						   label="Medium" selected="true" alpha="0" bottom="130" click="onRadioButtonMediumClick(event)" fontSize="18" />
+						   label="Medium" selected="true" alpha="0" bottom="130" click="onRadioButtonMediumClick(event)" fontSize="18"
+						   toolTip="Showing Speed: Normal&#xa;Retreat Speed: Normal&#xa;Total Moles: Medium" />
 			<s:RadioButton id="radioButtonHard" groupName="radioButtonDifficultySelection" 
-						   label="Hard" selected="false" alpha="0" bottom="100" click="onRadioButtonHardClick(event)" fontSize="18" />
+						   label="Hard" selected="false" alpha="0" bottom="100" click="onRadioButtonHardClick(event)" fontSize="18"
+						   toolTip="Showing Speed: Fast&#xa;Retreat Speed: Fast&#xa;Total Moles: Large" />
 			<s:Button id="startButton" label="Start!" alpha="0" click="onStartButtonClick()" fontFamily="Verdana" fontSize="22"
 					  width="108" height="40" left="50" bottom="30"/>
 		</s:BorderContainer>

@@ -65,6 +65,11 @@ package uk.co.dubit.whackamole.models.moles
 			_type = value;
 		}
 		
+		public function get hitPoints():int
+		{
+			return _hitPoints;
+		}
+		
 		public function hit() : void
 		{
 			if (--_hitPoints <= 0)

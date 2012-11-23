@@ -2,9 +2,8 @@ package uk.co.dubit.whackamole.models
 {
 	import flash.events.EventDispatcher;
 	import flash.events.TimerEvent;
+	import flash.media.Sound;
 	import flash.utils.Timer;
-	
-	import flashx.textLayout.formats.Float;
 	
 	import mx.collections.ArrayCollection;
 	
@@ -22,10 +21,9 @@ package uk.co.dubit.whackamole.models
 	 * 
 	 **/
 	
-	[Event(name="gameOver", type="uk.co.dubit.whackamole.models.events.MoleGameEvent")]
+	[Event(name="gameOver", type="uk.co.dubit.whackamole.models.events.MoleGameEvent")]	
 	public class MoleGame extends EventDispatcher
 	{
-		
 		private var _score:int = 0;
 		private var _moleHoles:ArrayCollection = new ArrayCollection();
 		private var _gameAchievements:MoleAchievements = null;
@@ -39,6 +37,21 @@ package uk.co.dubit.whackamole.models
 		private var showTimeDelayMax:int = 200;
 		private var showTimeDelayMin:int = -200;
 		private var hitBonus:int = 10;
+		
+		[Embed(source="/../assets/mole_hit.mp3") ]
+		private var moleHit:Class;
+		
+		[Embed(source="/../assets/mole_dead_1.mp3") ]
+		private var moleDead1:Class;
+		
+		[Embed(source="/../assets/mole_dead_2.mp3") ]
+		private var moleDead2:Class;
+		
+		[Embed(source="/../assets/mole_dead_3.mp3") ]
+		private var moleDead3:Class;
+		
+		[Embed(source="/../assets/mole_dead_4.mp3") ]
+		private var moleDead4:Class;
 		
 		public function MoleGame(acheivement:MoleAchievements, difficulty:String = IntroductionViewEvent.DIFFICULTY_MEDIUM)
 		{
@@ -129,10 +142,18 @@ package uk.co.dubit.whackamole.models
 			gameTimer.start();
 		}
 		
+		public function hitMole() : void
+		{
+			var moleHitSound:Sound = new this.moleHit() as Sound;
+			moleHitSound.play();
+		}
+		
 		public function killedMole(mole:Mole) : void
 		{
+			// add the score
 			score += mole.points;
 			
+			// report to the achievement system
 			switch (mole.type)
 			{
 				case Mole.TYPE_NORMAL:
@@ -152,6 +173,43 @@ package uk.co.dubit.whackamole.models
 				}
 				default:
 					break;
+			}
+			
+			// random choose a sound and play it
+			var randomSound:int = this.getRandomIntFromRange(1,4);
+			var moleDeadSound:Sound = null;
+			switch (randomSound)
+			{
+				case 1:
+				{
+					moleDeadSound = new this.moleDead1() as Sound;
+					moleDeadSound.play();
+					break;
+				}
+				case 2:
+				{
+					moleDeadSound = new this.moleDead2() as Sound;
+					moleDeadSound.play();
+					break;
+				}
+				case 3:
+				{
+					moleDeadSound = new this.moleDead3() as Sound;
+					moleDeadSound.play();
+					break;
+				}
+				case 4:
+				{
+					moleDeadSound = new this.moleDead4() as Sound;
+					moleDeadSound.play();
+					break;
+				}
+				default:
+				{
+					moleDeadSound = new this.moleDead1() as Sound;
+					moleDeadSound.play();
+					break;
+				}
 			}
 		}
 		
@@ -201,7 +259,7 @@ package uk.co.dubit.whackamole.models
 		
 		private function getRandomIntFromRange(min:int, max:int) : int
 		{
-			return Math.round(Math.random()*(max - min + 1) + min);
+			return Math.floor(Math.random()*(max - min + 1) + min);
 		}
 		
 		private function onGameTimer(event:TimerEvent) : void

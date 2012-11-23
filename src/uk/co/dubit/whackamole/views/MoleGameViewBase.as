@@ -2,12 +2,15 @@ package uk.co.dubit.whackamole.views
 {
 	import mx.collections.ArrayCollection;
 	import mx.controls.Label;
+	import mx.effects.Parallel;
 	import mx.effects.Sequence;
 	import mx.events.FlexEvent;
 	
 	import spark.components.Button;
 	import spark.components.Group;
 	import spark.components.Label;
+	import spark.components.VGroup;
+	import spark.effects.Fade;
 	
 	import uk.co.dubit.whackamole.models.MoleAchievements;
 	import uk.co.dubit.whackamole.models.MoleGame;
@@ -18,6 +21,8 @@ package uk.co.dubit.whackamole.views
 	[Event(name="moleGameContinue", type="uk.co.dubit.whackamole.views.events.MoleGameViewEvent")]
 	public class MoleGameViewBase extends Group
 	{	
+		public var sceneEntryAnimation:Parallel;
+		public var sceneExitAnimation:Fade;
 		public var startAnimation:Sequence;
 		public var endAnimation:Sequence;
 		public var restartAnimation:Sequence;
@@ -67,7 +72,7 @@ package uk.co.dubit.whackamole.views
 		
 		protected function onCreationComplete(event:FlexEvent) : void
 		{
-			startAnimation.play();
+			sceneEntryAnimation.play();
 		}
 		
 		protected function startAnimationEnd() : void
@@ -160,6 +165,13 @@ package uk.co.dubit.whackamole.views
 		}
 		
 		protected function onContinueButtonClick() : void
+		{
+			playAgainButton.visible = false;
+			continueButton.visible = false;
+			sceneExitAnimation.play();
+		}
+		
+		protected function onExitAnimationEnd() : void
 		{
 			dispatchEvent(new MoleGameViewEvent(MoleGameViewEvent.CONTINUE));
 		}
