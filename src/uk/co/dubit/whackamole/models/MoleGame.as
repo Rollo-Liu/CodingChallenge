@@ -44,6 +44,7 @@ package uk.co.dubit.whackamole.models
 		{
 			_gameAchievements = acheivement;
 			this.setDifficulty(difficulty);
+			_gameAchievements.totalMoles = this.totalMoles;
 			//Set up the game timer; when it fires a new
 			//mole is added
 			gameTimer = new Timer(this.getRandomIntFromRange(gameTimerDelayMin,gameTimerDelayMax), totalMoles);

@@ -11,12 +11,15 @@ package uk.co.dubit.whackamole.models
 		private var zombieMoleHits:int = 0;
 		private var missHits:int = 0;
 		
+		private var _totalMoles:int = 0;
+		
 		private var isApprenticeAwarded:Boolean = false;
 		private var isMasterAwarded:Boolean = false;
 		private var isMoleMassacreAwarded:Boolean = false;
 		private var isFiremanAwarded:Boolean = false;
 		private var isApocolypticaAwarded:Boolean = false;
 		private var isSoftTouchAwarded:Boolean = false;
+		private var isPerfectAwarded:Boolean = false;
 		
 		public function MoleAchievements()
 		{
@@ -56,6 +59,11 @@ package uk.co.dubit.whackamole.models
 			this.update();
 		}
 		
+		public function set totalMoles(value:int) : void
+		{
+			_totalMoles = value;
+		}
+		
 		public function achievementAwarded(achievement:String) : void
 		{
 			switch (achievement)
@@ -90,6 +98,11 @@ package uk.co.dubit.whackamole.models
 					isSoftTouchAwarded = true;
 					break;
 				}
+				case MoleAchievementEvent.ACHIEVEMENT_PERFECT:
+				{
+					isPerfectAwarded = true;
+					break;
+				}
 				default:
 					break;
 			}
@@ -114,6 +127,9 @@ package uk.co.dubit.whackamole.models
 			
 			if (missHits >= 30 && !isSoftTouchAwarded)
 				dispatchEvent(new MoleAchievementEvent(MoleAchievementEvent.ACHIEVEMENT_SOFT_TOUCH));
+			
+			if (missHits == 0 && moleHits == _totalMoles && !isPerfectAwarded)
+				dispatchEvent(new MoleAchievementEvent(MoleAchievementEvent.ACHIEVEMENT_PERFECT));
 		}
 	}
 }

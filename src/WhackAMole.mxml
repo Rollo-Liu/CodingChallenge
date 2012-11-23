@@ -7,8 +7,11 @@
 	
 	<fx:Style source="application.css" />
 	
-	<s:BorderContainer styleName="roundedBorder" left="10" top="10" right="10" bottom="10" >
+	<s:BorderContainer left="10" right="10" top="10" bottom="10" borderColor="#a7bbdd"
+					   borderVisible="true" borderWeight="3" cornerRadius="10"
+					   styleName="roundedBorder">
 		<s:Group id="viewContainer" styleName="stretchToContainer" />
+
 	</s:BorderContainer>
 	
 </whackamole:WhackAMoleBase>

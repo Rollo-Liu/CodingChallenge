@@ -5,22 +5,86 @@
 		 xmlns:views="uk.co.dubit.whackamole.views.*"
 		 styleName="stretchToContainer">
 	<fx:Declarations>
-		<!-- Place non-visual elements (e.g., services, value objects) here -->
+		<s:Sequence id="titleAnimation" startDelay="200" >
+			<s:Fade target="{group}" alphaFrom="0" alphaTo="1" duration="500" />
+			<s:Parallel duration="300" target="{titleLabel}"
+						effectEnd="titleShadowAnimation.play();titleGlowAnimation.play();" >
+				<s:Move yFrom="-20" yTo="20" />
+				<s:Fade alphaFrom="0" alphaTo="1" />
+			</s:Parallel>
+			<s:Parallel duration="300" target="{briefLabel}">
+				<s:Scale scaleXFrom="0" scaleXTo="1" scaleYFrom="0" scaleYTo="1" />
+				<s:Fade alphaFrom="0" alphaTo="1" />
+			</s:Parallel>
+			<s:Parallel duration="300">
+				<s:Move target="{labelDifficulty}" xFrom="0" xTo="50" />
+				<s:Fade target="{labelDifficulty}" alphaFrom="0" alphaTo="1" />
+				<s:Move target="{radioButtonEasy}" xFrom="0" xTo="50" startDelay="100" />
+				<s:Fade target="{radioButtonEasy}" alphaFrom="0" alphaTo="1" startDelay="100" />
+				<s:Move target="{radioButtonMedium}" xFrom="0" xTo="50" startDelay="200" />
+				<s:Fade target="{radioButtonMedium}" alphaFrom="0" alphaTo="1" startDelay="200" />
+				<s:Move target="{radioButtonHard}" xFrom="0" xTo="50" startDelay="300" />
+				<s:Fade target="{radioButtonHard}" alphaFrom="0" alphaTo="1" startDelay="300" />
+			</s:Parallel>
+			<s:Parallel duration="300" target="{startButton}">
+				<s:Scale scaleXFrom="1.5" scaleXTo="1" scaleYFrom="0" scaleYTo="1" />
+				<s:Fade alphaFrom="0" alphaTo="1" />
+			</s:Parallel>
+		</s:Sequence>
+		<s:DropShadowFilter id="titleDropShadowFilter"
+							color="0x000000"
+							alpha="0.5"
+							distance="5"
+							angle="35"/>
+		<s:GlowFilter id="titleGlowFilter"
+					  color="0xFF33EE"
+					  alpha="0.8"
+					  blurX="8" 
+					  blurY="6" 
+					  strength="0"
+					  inner="false" 
+					  knockout="false"/>
+		<s:AnimateFilter id="titleShadowAnimation" 
+						 target="{titleLabel}"
+						 repeatCount="1"
+						 duration="600"
+						 bitmapFilter="{titleDropShadowFilter}"
+						 effectEnd="titleShadowAnimation.end();titleLabel.filters = [titleDropShadowFilter,titleGlowFilter];">
+			<s:SimpleMotionPath property="alpha" valueFrom="0" valueTo="0.5"/>
+			<s:SimpleMotionPath property="distance" valueFrom="0" valueTo="5"/>
+			<s:SimpleMotionPath property="angle" valueFrom="0" valueTo="35"/>
+		</s:AnimateFilter>
+		<s:AnimateFilter id="titleGlowAnimation" 
+						 target="{titleLabel}"
+						 repeatCount="0"
+						 repeatBehavior="reverse"
+						 duration="600"
+						 bitmapFilter="{titleGlowFilter}"
+						 effectEnd="titleGlowAnimation.end()">
+			<s:SimpleMotionPath property="strength" valueFrom="0" valueTo="0.5"/>
+		</s:AnimateFilter>
 	</fx:Declarations>
 	
-	<s:VGroup width="100%" height="100%" paddingBottom="10" paddingLeft="10" paddingRight="10" paddingTop="10">
+	<s:VGroup id="group" alpha="0" width="100%" height="100%" paddingBottom="10" paddingLeft="10" paddingRight="10" paddingTop="10">
 		
-		<s:BorderContainer styleName="roundedBorder" minHeight="0" minWidth="0" width="100%" height="40" >
-			<s:Label styleName="titleLabel" text="Welcome to Whack-A-Mole" horizontalCenter="0" verticalCenter="0"/>
-		</s:BorderContainer>
-		
-		<s:BorderContainer styleName="roundedBorder" minHeight="0" minWidth="0" width="100%" height="100%" >
-			<s:Label text="You know the drill - click the moles as soon as they appear, gain points. Hit as many as you can within the time limit. Good luck!"
-					 horizontalCenter="0" verticalCenter="0" width="60%" textAlign="center" />
-			<s:RadioButton id="radioButtonEasy" groupName="radioButtonDifficultySelection" label="Easy" selected="false" left="100" bottom="100" click="onRadioButtonEasyClick(event)" />
-			<s:RadioButton id="radioButtonMedium" groupName="radioButtonDifficultySelection" label="Medium" selected="true" horizontalCenter="0" bottom="100" click="onRadioButtonMediumClick(event)"/>
-			<s:RadioButton id="radioButtonHard" groupName="radioButtonDifficultySelection" label="Hard" selected="false" right="100" bottom="100" click="onRadioButtonHardClick(event)"/>
-			<s:Button id="startButton" click="onStartButtonClick()" label="Start!" horizontalCenter="0" bottom="10"/>
+		<s:BorderContainer width="100%" height="100%" minWidth="0" minHeight="0"
+						   dropShadowVisible="true" styleName="roundedBorder">
+			<s:Image id="moleImage" source="@Embed('/../assets/title_mole.png')" right="0" bottom="0" />
+			<s:Label id="titleLabel" alpha="0" color="#000000" fontFamily="Verdana" fontSize="22" fontWeight="bold"
+					 horizontalCenter="0"
+					 text="Dubit Whack-A-Mole Challenge&#xa;Technical Prototypes" textAlign="center">
+			</s:Label>
+			<s:Label id="briefLabel" text="You know the drill - click the moles as soon as they appear, gain points. Hit as many as you can within the time limit. Good luck!"
+					 alpha="0" horizontalCenter="0" top="80" width="70%" textAlign="center" />
+			<s:Label id="labelDifficulty" text="Difficulty:" fontSize="18" alpha="0" bottom="190" />
+			<s:RadioButton id="radioButtonEasy" groupName="radioButtonDifficultySelection"
+						   label="Easy" selected="false" alpha="0" bottom="160" click="onRadioButtonEasyClick(event)" fontSize="18" />
+			<s:RadioButton id="radioButtonMedium" groupName="radioButtonDifficultySelection" 
+						   label="Medium" selected="true" alpha="0" bottom="130" click="onRadioButtonMediumClick(event)" fontSize="18" />
+			<s:RadioButton id="radioButtonHard" groupName="radioButtonDifficultySelection" 
+						   label="Hard" selected="false" alpha="0" bottom="100" click="onRadioButtonHardClick(event)" fontSize="18" />
+			<s:Button id="startButton" label="Start!" alpha="0" click="onStartButtonClick()" fontFamily="Verdana" fontSize="22"
+					  width="108" height="40" left="50" bottom="30"/>
 		</s:BorderContainer>
 		
 	</s:VGroup>

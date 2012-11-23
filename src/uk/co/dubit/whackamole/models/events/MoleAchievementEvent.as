@@ -10,6 +10,7 @@ package uk.co.dubit.whackamole.models.events
 		public static const ACHIEVEMENT_FIREMAN:String = "achievementFireman";
 		public static const ACHIEVEMENT_APOCOLYPTICA:String = "achievementApocolyptica";
 		public static const ACHIEVEMENT_SOFT_TOUCH:String = "achievementSoftTouch";
+		public static const ACHIEVEMENT_PERFECT:String = "achievementPerfect";
 		
 		public function MoleAchievementEvent(type:String, bubbles:Boolean=false, cancelable:Boolean=false)
 		{
